@@ -1,0 +1,26 @@
+def sum(a,b=5,c){
+    println a+b+c
+}
+
+def sum4(a,b,c=4,d=3){
+    println a+b+c+d
+}
+def clos = {param, param1 -> println param+param1};
+clos("3,3"," parmas 1")
+3.times{println "hi"}
+def x = """hello
+this
+is multiline 
+string"""
+println x
+sum4(1,2,3)
+sum4(1,2,4,2)
+
+sum(1,2)
+sum(1,2,3)
+def name = "uddesh"
+def HelloName = "Hello, ${name}"
+println HelloName
+//def date = new Date()
+//date++
+//println date
