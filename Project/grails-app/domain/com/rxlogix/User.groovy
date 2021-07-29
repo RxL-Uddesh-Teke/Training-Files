@@ -6,7 +6,7 @@ class User {
     String password
     String firstName
     String lastName
-    byte photo
+    String photo
     boolean admin
     Date dateCreated
     Date lastUpdated
@@ -24,7 +24,7 @@ class User {
         firstName blank: false
         lastName nullable: true
         password blank: false
-
+//        photo type:'blob'
     }
 
     static mapping = {

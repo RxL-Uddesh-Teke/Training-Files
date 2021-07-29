@@ -2,6 +2,7 @@ package com.rxlogix
 
 
 class UserController {
+    def userService
 
     def index(){
         render (view: 'Main_page')
@@ -10,19 +11,17 @@ class UserController {
         render(view: 'loginUser')
     }
     def loginUser(){
-        def x = User.findByUserName(params.username);
+        def x = User.findByUserName(params.username)
         if(x!= null){
             if(x.password==params.password){
 //                render "Congratulations you are logged in"
-                render (action: 'userPage', model: 'params')
+                redirect(action: "userPage", params:params)
             }
             else{
                 render "Oops wrong password"
-                return
             }
-        }
+        }else
         render "Username doesn't exist"
-        return
     }
 
     def register(){
@@ -42,10 +41,30 @@ class UserController {
     }
 
     def userPage(){
-        render(view: 'userPage', model: params)
+        def user = User.findByUserName(params.username)
+        render view: 'userPage', model: [user: user]
     }
 
     def topFive(){
         List<Resources> r = Resources.listOrderByDescription(max: 5)
+    }
+
+    def search(){
+        render(view: 'search')
+    }
+
+    def admin(){
+        def users = User.list();
+        render(view: 'admin', model: [user: users])
+    }
+
+    def registerUser(){
+        String msg = userService.register(request,params)
+        if(msg.split(" ")[0] == "Registered"){
+            flash.success = msg
+        }else{
+            flash.error = msg
+        }
+        redirect(controller: "user", action: "index")
     }
 }

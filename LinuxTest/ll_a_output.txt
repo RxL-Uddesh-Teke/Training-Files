@@ -1,0 +1,9 @@
+.
+..
+ll_a_output.txt
+lla_out.txt
+ll_output.txt
+ls_output.txt
+testDir
+text.txt
+touch

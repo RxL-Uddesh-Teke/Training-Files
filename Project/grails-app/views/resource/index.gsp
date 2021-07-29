@@ -55,7 +55,7 @@
     }
 
     #div{
-        color: blue;
+        /*color: blue;*/
         border-radius: 10px;
         border-width: 1px;
         border-style: solid;
@@ -79,16 +79,84 @@
         <h2 style="text-align: center;"> Home </h2>
         <div style="border-color: black;">
             <div class="row" id="div">
-                <div class="col-sm-6"><h2>Link Sharing</h2></div>
+                <div class="col-sm-6"><h2 style="color: blue;">Link Sharing</h2></div>
                 <div class="col-sm-6">
-                    <div class="row">
+                    <div class="row" style="float: right;">
                         <div>
                             <input type="text" placeholder="Search..">
                             <i class="fa fa-search fa-lg" style="color: black;" aria-hidden="true"></i>
+                        </div>&nbsp&nbsp
+                        %{--&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp--}%
+                        <button type="button" class="btn" data-target="#shareResource" style="width: 40px;" data-toggle="modal"><i class="fa fa-link" aria-hidden="true"></i></button>&nbsp&nbsp
+                        <div class="modal fade" id="shareResource" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Share Link</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="resource-link" class="col-form-label">Link</label>
+                                                <input type="text" class="form-control" id="resource-link" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="description" class="col-form-label">Description</label>
+                                                <textarea class="form-control" id="description"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                %{--<label for="message-text" class="col-form-label">Message:</label>--}%
+                                                %{--<textarea class="form-control" id="message-text"></textarea>--}%
+                                                <label for="select-text" >Topic</label>
+                                                <select id="select-text" name="time" style="width: 100px;" required>
+                                                    <option value="topicName1">Groovy</option>
+                                                    <option value="topicName2">Grails</option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary">Share</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        &nbsp&nbsp&nbsp&nbsp
-                        <button data-target="#createTopic" style="width: 40px;"><i class="fa fa-comment" aria-hidden="true"></i></button>&nbsp&nbsp
-                        <button data-target="#shareDocument" style="width: 40px;"> <i class="fa fa-file" aria-hidden="true"> </i> </button>&nbsp&nbsp
+                        <button type="button" class="btn" data-target="#shareDocument" style="width: 40px;" data-toggle="modal"> <i class="fa fa-file" aria-hidden="true"> </i> </button>&nbsp&nbsp
+                        <div class="modal fade" id="shareDocument" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Share Document</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="document" class="col-form-label">Document</label>
+                                                <input type="file" class="form-control" id="document" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="descriptionDoc" class="col-form-label">Description</label>
+                                                <textarea class="form-control" id="descriptionDoc"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                %{--<label for="message-text" class="col-form-label">Message:</label>--}%
+                                                %{--<textarea class="form-control" id="message-text"></textarea>--}%
+                                                <label for="select-text" >Topic</label>
+                                                <select id="select-text" name="time" style="width: 100px;" required>
+                                                    <option value="topicName1">Groovy</option>
+                                                    <option value="topicName2">Grails</option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary">Share</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class = "dropdown" style="width: 100px;">
                             <button type = "button" class = "btn btn-secondary dropdown-toggle" data-toggle = "dropdown">user</button>
                             <ul class = "dropdown-menu" >

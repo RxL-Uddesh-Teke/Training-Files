@@ -1,0 +1,10 @@
+//Set set = ["ok",1,2,3,4,4]
+Set set = new HashSet()
+println set.class // default set class
+//println set
+//println set[0]
+set.add(11)
+set.add(21)
+set.add(31)
+set.add(41)
+println set

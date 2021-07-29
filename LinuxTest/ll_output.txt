@@ -1,0 +1,7 @@
+total 20
+drwxrwxr-x  3 rxlogix rxlogix 4096 Jul 15 09:43 ./
+drwxrwxr-x 10 rxlogix rxlogix 4096 Jul 15 09:32 ../
+-rw-rw-r--  1 rxlogix rxlogix    0 Jul 15 09:43 ll_output.txt
+-rw-rw-r--  1 rxlogix rxlogix  175 Jul 15 09:42 ls_output.txt
+drwxrwxr-x  2 rxlogix rxlogix 4096 Jul 15 09:36 testDir/
+-rwx------  1 rxlogix rxlogix   12 Jul 15 09:33 text.txt*

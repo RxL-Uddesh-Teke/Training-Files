@@ -1,0 +1,4 @@
+total 8
+-rw-rw-r-- 1 rxlogix rxlogix    0 Jul 15 09:40 comm.txt
+drwxrwxr-x 2 rxlogix rxlogix 4096 Jul 15 09:36 testDir
+-rwx------ 1 rxlogix rxlogix   12 Jul 15 09:33 text.txt
