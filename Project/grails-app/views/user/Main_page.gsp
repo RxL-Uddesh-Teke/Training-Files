@@ -140,46 +140,49 @@
                     <label><b>Log In</b></label><hr>
                     <div>
                         <label for="username"><b>Username</b></label>&nbsp
-                        <input type="text" placeholder="Enter Username" id="username" name="username" required><br><br>
+                        <input style="float: right;" type="text" placeholder="Enter Username" id="username" name="username" required><br><br>
 
                         <label for="password"><b>Password</b></label>&nbsp
-                        <input type="password" placeholder="Enter Password" id="password" name="password" required><br><br>
+                        <input style="float: right;" type="password" placeholder="Enter Password" id="password" name="password" required><br><br>
 
-                        <button type="submit">Login</button>
+                        <button type="submit" class="btn btn-primary">Login</button>
                         <label>
                             <input type="checkbox" checked="checked" name="remember"> Remember me
                         </label>
-                    </div>
+                    </div><br>
 
-                    <div style="background-color:#f1f1f1">
-                        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                    <div>
+                        <button type="button" class="btn" onclick="document.getElementById('id01').style.display='none'">Cancel</button>
                         <span class="psw">Forgot <a href="#">password?</a></span>
                     </div>
                 </g:form>
             </div>
 
             <div class="col-sm-12" id="border1">
-                <g:form class="form-group" controller="user" action="register">
+                <g:form class="form-group" enctype="multipart/form-data" controller="user" action="registerUser">
                     <div>
                         <label bold><b>Sign Up</b></label>&nbsp
                         <p>Please fill in this form to create an account.</p><hr>
-                        <label for="email"><b>Email</b></label>&nbsp
-                        <input type="text" placeholder="Enter Email" id="email" name="email" required><br><br>
+                        <label ><b>Email</b></label>&nbsp
+                        <input style="float: right;" type="text" placeholder="Enter Email" name="email" required><br><br>
 
-                        <label for="userName1"><b>User Name</b></label>&nbsp
-                        <input type="text" placeholder="Enter User Name" id="userName1" name="userName" required><br><br>
+                        <label ><b>User Name</b></label>&nbsp
+                        <input style="float: right;" type="text" placeholder="Enter User Name" name="userName" required><br><br>
 
-                        <label for="firstName"><b>first Name</b></label>&nbsp
-                        <input type="text" placeholder="Enter first Name" id="firstName" name="firstName" required><br><br>
+                        <label ><b>first Name</b></label>&nbsp
+                        <input style="float: right;" type="text" placeholder="Enter first Name"  name="firstName" required><br><br>
 
-                        <label for="lastName"><b>last Name</b></label>&nbsp
-                        <input type="text" placeholder="Enter last Name" id="lastName" name="lastName" required><br><br>
+                        <label ><b>last Name</b></label>&nbsp
+                        <input style="float: right;" type="text" placeholder="Enter last Name" name="lastName" required><br><br>
 
-                        <label for="password1"><b>Password</b></label>&nbsp
-                        <input type="password" placeholder="Enter Password" id="password1" name="password" required><br><br>
+                        <label ><b>Password</b></label>&nbsp
+                        <input style="float: right;" type="password" placeholder="Enter Password"  name="password" required><br><br>
 
-                        <label for="psw-repeat1"><b>Repeat Password</b></label>&nbsp
-                        <input type="password" placeholder="Repeat Password" id="psw-repeat1" name="psw-repeat" required><br><br>
+                        <label ><b>Repeat Password</b></label>&nbsp
+                        <input style="float: right;" type="password" placeholder="Repeat Password" name="psw_repeat" required><br><br>
+
+                        <label><b>Select Image</b></label>&nbsp
+                        <input type="file"  name="image">
 
                         <label>
                             <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
@@ -188,8 +191,8 @@
                         <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
 
                         <div class="clearfix">
-                            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-                            <button type="submit" class="signupbtn">Sign Up</button>
+                            <button type="button" class="btn" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
                         </div>
                     </div>
                 </g:form>

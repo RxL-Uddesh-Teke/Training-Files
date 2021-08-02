@@ -1,6 +1,7 @@
 package com.rxlogix
 
-class ResourceController {
+class ResourcesController {
+    def resourcesService
 
     def index() {
         render(view: 'index')
@@ -32,6 +33,7 @@ class ResourceController {
             println e
             println "${params.topic}----------------------- ${params.url}"
         }
-
+        String msg = resourcesService.createDocument(request, params, r)
+        render msg
     }
 }

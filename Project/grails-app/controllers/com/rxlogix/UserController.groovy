@@ -1,5 +1,7 @@
 package com.rxlogix
 
+import org.hibernate.criterion.Projection
+
 
 class UserController {
     def userService
@@ -7,25 +9,40 @@ class UserController {
     def index(){
         render (view: 'Main_page')
     }
+
+    def logout(){
+        session.invalidate()
+        redirect(action: index())
+    }
     def action2(){
-        render(view: 'loginUser')
+        render(view: 'loginUser', model: [user: user])
     }
     def loginUser(){
-        def x = User.findByUserName(params.username)
-        if(x!= null){
-            if(x.password==params.password){
-//                render "Congratulations you are logged in"
-                redirect(action: "userPage", params:params)
-            }
-            else{
-                render "Oops wrong password"
-            }
-        }else
-        render "Username doesn't exist"
+//        def x = User.findByUserName(params.username)
+//        if(x!= null){
+//            if(x.password==params.password){
+////                render "Congratulations you are logged in"
+//                redirect(action: "userPage", params:params)
+//            }
+//            else{
+//                render "Oops wrong password"
+//            }
+//        }else
+//        render "Username doesn't exist"
+
+        String msg = userService.login(request, params)
+        if(msg.split(" ")[0] == "Congratulations"){
+            flash.success = msg
+            session.setAttribute('id', User.findByUserName(params.username).getId())
+            redirect(action:"userPage", params:params)
+        }else {
+//            flash.error = msg
+            render msg
+        }
     }
 
     def register(){
-        def x = User.findByUserName(params.username)
+        def x = User.findByUserName(params.userName)
         def y = User.findByEmail(params.email)
         if(x==null&&y==null){
             User u = new User(params)
@@ -41,7 +58,7 @@ class UserController {
     }
 
     def userPage(){
-        def user = User.findByUserName(params.username)
+        def user = User.findById(session.getAttribute("id"))
         render view: 'userPage', model: [user: user]
     }
 
@@ -54,7 +71,7 @@ class UserController {
     }
 
     def admin(){
-        def users = User.list();
+        def users = userService.userList()
         render(view: 'admin', model: [user: users])
     }
 
@@ -65,6 +82,29 @@ class UserController {
         }else{
             flash.error = msg
         }
-        redirect(controller: "user", action: "index")
+        render msg
+////        redirect(controller: "user", action: "index")
+        Integer x = User.createCriteria().get{
+            projections {
+                avg("id")
+            }
+        }
+        render x
+    }
+
+    def uniqueLast(){
+        def msg = userService.logout();
+        render msg
+    }
+
+    def editUserProfile(){
+        User user = User.get(session.getAttribute('id'))
+        render view: 'editUserProfile', model: [user: user]
+    }
+
+    def editUser(){
+        Integer id = session.getAttribute("id");
+        String msg = userService.update(request, params, id)
+        render msg
     }
 }

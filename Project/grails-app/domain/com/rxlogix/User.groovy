@@ -4,6 +4,7 @@ class User {
     String email
     String userName
     String password
+//    String cnf_password
     String firstName
     String lastName
     String photo
@@ -24,11 +25,14 @@ class User {
         firstName blank: false
         lastName nullable: true
         password blank: false
+        photo nullable: true, blank: true
+
 //        photo type:'blob'
     }
 
     static mapping = {
         table "USR"
     }
+
 }
 
