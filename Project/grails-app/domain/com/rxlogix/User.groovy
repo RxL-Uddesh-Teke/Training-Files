@@ -16,7 +16,7 @@ class User {
     // check one to one
 //    static hasOne = [resourceRating: ResourceRating]
 
-    static hasMany = [topics:Topic,subscriptions:Subscription,resources:Resources,readingItems:ReadingItem]
+    static hasMany = [topic:Topic,subscriptions:Subscription,resources:Resources,readingItems:ReadingItem]
 //    resourceRating check
 
     static constraints = {

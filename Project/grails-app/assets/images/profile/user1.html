@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Link Sharing App</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<style >
+		#div{
+			color: blue; 
+			border-radius: 10px;
+			border-width: 1px; 
+			border-style: solid; 
+			border-color: black; 
+			width: 100%;
+			padding: 10px;
+			margin: 5px;
+		}
+		#border1{
+			border-radius: 10px; 
+			border-width: 1px; 
+			border-style: solid; 
+			border-color: black; 
+			/*float: left;*/
+			padding: 10px;
+			margin: 5px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h2 style="text-align: center;"> Home </h2>
+		<div style="border-color: black;" class="container">
+			<div class="row" id="div">
+				<div class="col-sm-9"><h2>Link Sharing</h2></div>
+				<div class="col-sm-3">
+					<i class="fa fa-search" aria-hidden="true" style="color:black;"></i>
+					<input type="text" placeholder="Search..">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div >
+			<div class="row">
+		   		<div class="col-sm-5" id="border1">
+		   			<div class="row">
+		   				<img class="col-sm-4" style="border-radius: 20%; height: 120px;" src="profile_uddesh.jpg">
+		   				<div class="col-sm-6">
+		   					<div class="row">
+		   						<div class="col-sm-12">
+		   							<b>Uddesh Teke</b>
+				   					<a href="#"><i class="fa fa-twitter"></i></a>  
+							   		<a href="#"><i class="fa fa-linkedin"></i></a>  
+							   		<a href="#"><i class="fa fa-facebook"></i></a> 
+		   						</div>
+		   						<div class="col-sm-12"><a href="#">@uddesh</a></div><hr>
+		   						<div class="col-sm-6"><a href="#">Subscriptions</a></div>
+		   						<div class="col-sm-6"><a href="#">Topics</a></div>
+		   						<div class="col-sm-6">50</div>
+		   						<div class="col-sm-6">30</div>
+
+		   					</div>
+		   				</div>
+		   			</div>
+		   		</div>
+		   		<div class="col-sm-1"></div>
+				<div class="col-sm-5" id="border1">
+					<b>Inbox</b><hr>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

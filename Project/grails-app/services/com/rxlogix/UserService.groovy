@@ -57,7 +57,6 @@ class UserService {
                 file.transferTo(photo)
                 newUser.photo = "/profile/${newUser.userName}.jpg"
                 //"/profile/${params.userName}.jpg"
-
 //                newUser = User(params, photo:"${photo.getAbsolutePath()}")
 //                println newUser.photo
             }
@@ -71,7 +70,6 @@ class UserService {
                 print(e)
                 return "Error in registering, Please try again..."
             }
-
         }
     }
 

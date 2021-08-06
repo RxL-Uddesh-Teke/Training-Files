@@ -1,5 +1,6 @@
 package com.rxlogix
 
+import com.rxlogix.Enums.VisibilityEnum
 import org.hibernate.criterion.Projection
 
 
@@ -57,9 +58,17 @@ class UserController {
         }
     }
 
-    def userPage(){
+    def userPage() {
         def user = User.findById(session.getAttribute("id"))
-        render view: 'userPage', model: [user: user]
+        List<Topic> trendingTopics = Topic.createCriteria().list {
+            eq("visibilityEnum", VisibilityEnum.PUBLIC)
+//            or {
+//                eq("visibilityEnum", VisibilityEnum.PRIVATE)
+//                Subscription.findAllByUser(User.get(session.getAttribute("id"))).topic
+//            }
+        }
+        List<Subscription> subs = Subscription.findAllByUser(User.get(session.getAttribute("id")))
+        render view: 'userPage', model: [user: user, trendingTopics: trendingTopics, subs:subs]
     }
 
     def topFive(){
