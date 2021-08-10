@@ -26,4 +26,5 @@ class SubscriptionController {
         }
         return "ok"
     }
+
 }

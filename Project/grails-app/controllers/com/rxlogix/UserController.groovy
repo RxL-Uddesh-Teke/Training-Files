@@ -67,17 +67,24 @@ class UserController {
 //                Subscription.findAllByUser(User.get(session.getAttribute("id"))).topic
 //            }
         }
+        List<ReadingItem> readingItemList = ReadingItem.createCriteria().list {
+            eq("user", user)
+            eq("isRead", false)
+        }
         List<Subscription> subs = Subscription.findAllByUser(User.get(session.getAttribute("id")))
-        render view: 'userPage', model: [user: user, trendingTopics: trendingTopics, subs:subs]
+        render view: 'userPage', model: [user: user, trendingTopics: trendingTopics, subs:subs, readItem: readingItemList]
     }
 
     def topFive(){
         List<Resources> r = Resources.listOrderByDescription(max: 5)
     }
 
-    def search(){
-        render(view: 'search')
-    }
+//    def search(){
+//        Topic t = Topic.createCriteria().list {
+//
+//        }
+//        render(view: 'search')
+//    }
 
     def admin(){
         def users = userService.userList()
@@ -88,18 +95,20 @@ class UserController {
         String msg = userService.register(request,params)
         if(msg.split(" ")[0] == "Registered"){
             flash.success = msg
+//            redirect(action: securityQuestion(),params: params)
         }else{
             flash.error = msg
         }
         render msg
-////        redirect(controller: "user", action: "index")
-        Integer x = User.createCriteria().get{
-            projections {
-                avg("id")
-            }
-        }
-        render x
     }
+
+    def securityQuestion(){
+        print("Inside securityQuestion acion")
+        User u = User.findByUserName(params.userName)
+        render(view: "securityQuestion", model: u)
+    }
+
+
 
     def uniqueLast(){
         def msg = userService.logout();
@@ -108,12 +117,18 @@ class UserController {
 
     def editUserProfile(){
         User user = User.get(session.getAttribute('id'))
-        render view: 'editUserProfile', model: [user: user]
+        render (view: 'editUserProfile', model: [user: user])
     }
 
     def editUser(){
         Integer id = session.getAttribute("id");
         String msg = userService.update(request, params, id)
         render msg
+    }
+
+    def markAsRead(){
+        ReadingItem r = ReadingItem.get(params.id)
+        r.setProperty("isRead", true)
+        r.save(flush:true)
     }
 }

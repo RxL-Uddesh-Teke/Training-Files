@@ -9,6 +9,15 @@ class ResourcesService {
 
     }
 
+    def searchResource(def request, Map params, Long id){
+        User u = User.get(id)
+
+        List<Resources> r = Resources.createCriteria().list {
+            ilike("description", "${params.search}%")
+        }
+        return r
+    }
+
 //    def createDocument(def request,Map params, Resources r){
 //        def file = request.getFile('document')
 //        String path = ""

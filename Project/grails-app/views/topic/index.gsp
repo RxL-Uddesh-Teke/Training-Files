@@ -42,7 +42,7 @@
     </style>
 </head>
 <body class="container">
-<h2 style="text-align: center;"> Grails Home Page </h2>
+<h2 style="text-align: center;"> ${topic.name} Home Page </h2>
 <div style="border-color: black;">
     <div class="row" id="div">
         <div class="col-sm-6"><h2>Link Sharing</h2></div>
@@ -145,20 +145,20 @@
             <div id="border1">
                 <div>
                     <p>
-                        <b>Topic : "${topic.name}"</b>
+                        <b>Topic : ${topic.name}</b>
                     </p>
                 </div><hr>
 
                 <div class="row">
                     <div class="col-sm-4">
-                        <img src="https://grails.org/images/grails_logo.svg" style="border-radius: 20%; height: 120px; width: 110px;">
+                        <img src="https://codeopinion.com/wp-content/uploads/2017/02/group-of-members-users-icon.png" style="border-radius: 20%; height: 120px; width: 110px;">
                     </div>
                     <div class="col-sm-8">
-                        <a href="#">${topic.name}</a> (private)
+                        <a href="#">${topic.name}</a> ${topic.visibilityEnum}
                         <hr>
                         <div class="row">
                             <div class="col-sm-4">
-                                @username
+                                @${topic.user.userName}
                                 <a href="#">Subscribe</a>
                             </div>
                             <div class="col-sm-5">
@@ -229,7 +229,7 @@
             <div id="border1">
                 <div>
                     <p>
-                        <b>Posts : "Grails"</b>
+                        <b>Posts : ${topic.name}</b>
                     </p>
                 </div> <hr>
 
@@ -269,8 +269,12 @@
                                     <i class="fa fa-twitter" aria-hidden="true"></i>
                                 </div>
                                 <div class="col-sm-10" style="font-size: small">
-                                    <a href="#">Download</a>&nbsp&nbsp
-                                    <a href="#">View Full site</a>&nbsp&nbsp
+                                    <g:if test="${com.rxlogix.DocumentResource.findByResource(it)!=null}">
+                                        <a href="${com.rxlogix.DocumentResource.findByResource(it).filePath}" download>Download</a>&nbsp&nbsp
+                                    </g:if>
+                                    <g:else>
+                                    <a href="${com.rxlogix.LinkResource.findByResource(it).url}">View Full site</a>&nbsp&nbsp
+                                    </g:else>
                                     <a href="#">Mark as Read</a>&nbsp&nbsp
                                     <a href="#">View Post</a>
                                 </div>

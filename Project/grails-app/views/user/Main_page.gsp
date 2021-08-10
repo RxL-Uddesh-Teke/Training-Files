@@ -169,11 +169,11 @@
                         <label ><b>User Name</b></label>&nbsp
                         <input style="float: right;" type="text" placeholder="Enter User Name" name="userName" required><br><br>
 
-                        <label ><b>first Name</b></label>&nbsp
-                        <input style="float: right;" type="text" placeholder="Enter first Name"  name="firstName" required><br><br>
+                        <label ><b>First Name</b></label>&nbsp
+                        <input style="float: right;" type="text" placeholder="Enter First Name"  name="firstName" required><br><br>
 
-                        <label ><b>last Name</b></label>&nbsp
-                        <input style="float: right;" type="text" placeholder="Enter last Name" name="lastName" required><br><br>
+                        <label ><b>Last Name</b></label>&nbsp
+                        <input style="float: right;" type="text" placeholder="Enter Last Name" name="lastName" required><br><br>
 
                         <label ><b>Password</b></label>&nbsp
                         <input style="float: right;" type="password" placeholder="Enter Password"  name="password" required><br><br>

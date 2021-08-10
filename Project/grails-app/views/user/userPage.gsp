@@ -68,8 +68,16 @@
             <div class="col-sm-7">
                 <div class="row">
                     <div class="col-sm-6">
-                        <i class="fa fa-search" aria-hidden="true" style="color:black;"></i>
-                        <input type="text" placeholder="Search..">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <input type="text" placeholder="Search.." id="search" onkeypress="search()">
+                            </div>
+                            <div class="col-sm-2">
+                                <g:link class="dropdown-item"  controller="search" action="search">
+                                    <i class="fa fa-search" aria-hidden="true" style="color:black;"></i>
+                                </g:link>
+                            </div>
+                        </div>
                     </div>
                     <button type="button" class="btn" data-target="#createTopic" data-toggle="modal"><i class="fa fa-comment" aria-hidden="true"></i></button>&nbsp&nbsp
                     <div class="modal fade" id="createTopic" role="dialog">
@@ -96,45 +104,49 @@
                                         </div>
                                     <div class="modal-footer">
                                         %{--<g:actionSubmit controller="topic" action="createTopic" value="createTopic">Save</g:actionSubmit>--}%
+                                        <button type="submit" class="btn btn-primary" id="btn">Save</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary" id="btn">Save</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            %{--<button type="submit" class="btn btn-primary" id="btn">Save</button>--}%
+                            %{--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>--}%
                         </form>
 
                     </div>
                     <button type="button" class="btn"  data-target="#sendInvite" data-toggle="modal"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>&nbsp&nbsp
                     <div class="modal fade" id="sendInvite" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Send Invite</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="recipient-email" class="col-form-label">Email</label>
-                                            <input type="text" class="form-control" id="recipient-email" required>
-                                        </div>
-                                        <div class="form-group">
-                                            %{--<label for="message-text" class="col-form-label">Message:</label>--}%
-                                            %{--<textarea class="form-control" id="message-text"></textarea>--}%
-                                            <label for="select-text" >Topic</label>
-                                            <select id="select-text" name="time" style="width: 100px;" required>
-                                                <g:each in="${com.rxlogix.Topic.findAllByUser(user)}">
-                                                    <option value="${it.name}">${it.name}</option>
-                                                </g:each>
-                                            </select>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary">Invite</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <g:form class="form-group" controller="topic" action="sendInvite">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Send Invite</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="recipient-email" class="col-form-label">Email</label>
+                                                <input type="text" name="recipientEmail" class="form-control" id="recipient-email" required>
+                                            </div>
+                                            <div class="form-group">
+                                                %{--<label for="message-text" class="col-form-label">Message:</label>--}%
+                                                %{--<textarea class="form-control" id="message-text"></textarea>--}%
+                                                <label for="select-text" >Topic</label>
+                                                <select id="select-text" name="topicId" style="width: 100px;" required>
+                                                    <g:each in="${com.rxlogix.Subscription.findAllByUser(user).topic}">
+                                                        <option value="${it.id}">${it.name}</option>
+                                                    </g:each>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Invite</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </g:form>
                     </div>
                     <button type="button" class="btn"  data-target="#shareResource" data-toggle="modal"><i class="fa fa-link" aria-hidden="true"></i></button>&nbsp&nbsp
                     <div class="modal fade" id="shareResource" role="dialog">
@@ -159,7 +171,7 @@
                                                 %{--<textarea class="form-control" id="message-text"></textarea>--}%
                                                 <label for="select-text" >Topic</label>
                                                 <select id="select-text" name="topic" style="width: 100px;" required>
-                                                    <g:each in="${com.rxlogix.Topic.findAllByUser(user)}">
+                                                    <g:each in="${com.rxlogix.Subscription.findAllByUser(user).topic}">
                                                         <option value="${it.name}">${it.name}</option>
                                                     </g:each>
                                                 </select>
@@ -197,7 +209,7 @@
                                                 %{--<textarea class="form-control" id="message-text"></textarea>--}%
                                                 <label for="select-text" >Topic</label>
                                                 <select id="select-text" name="topic" style="width: 100px;" required>
-                                                    <g:each in="${com.rxlogix.Topic.findAllByUser(user)}">
+                                                    <g:each in="${com.rxlogix.Subscription.findAllByUser(user).topic}">
                                                         <option value="${it.name}">${it.name}</option>
                                                     </g:each>
                                                 </select>
@@ -245,9 +257,8 @@
                         <div class="col-sm-12"><a href="#">@${user.userName}</a></div><hr>
                         <div class="col-sm-6"><a href="#">Subscriptions</a></div>
                         <div class="col-sm-6"><a href="#">Topics</a></div>
-                        <div class="col-sm-6">${com.rxlogix.Topic.countByUser(user)}</div>
                         <div class="col-sm-6">${com.rxlogix.Subscription.countByUser(user)}</div>
-
+                        <div class="col-sm-6">${com.rxlogix.Topic.countByUser(user)}</div>
                     </div>
                 </div>
             </div>
@@ -256,7 +267,7 @@
             <b>Subscriptions</b>
             <a href="#" style="float: right;">View All</a>
             <hr class="new1">
-            <div style="overflow: auto; height: 320px; ">
+            <div style="overflow: auto; overflow-x: hidden; height: 320px; ">
                 <div class="row">
                     <div class="col-sm-3">
                         <img src="https://grails.org/images/grails_logo.svg" style="border-radius: 20%; height: 120px; width: 110px;">
@@ -327,15 +338,10 @@
                              value="${com.rxlogix.Subscription.findByTopicAndUser(it, com.rxlogix.User.get(session.getAttribute("id"))).seriousnessEnum}"
                              onchange="changeSeriousness(${it.id})" id="seriousness${it.id}">
                             </g:select>
-                            %{--<select  name="seriousness${it.id}" id="seriousness${it.id}" onchange="changeSeriousness(${it.id})">--}%
-                                %{--<option value="verySerious">Very Serious</option>--}%
-                                %{--<option value="Serious">Serious</option>--}%
-                                %{--<option value="Casual">Casual</option>--}%
-                            %{--</select>&nbsp&nbsp--}%
-                            <select name="visibility">
-                                <option value="Public">Public</option>
-                                <option value="Private">Private</option>
-                            </select>&nbsp&nbsp
+                            <g:select name="visibility${it.id}" from="${com.rxlogix.Enums.VisibilityEnum.values()}"
+                            value="${it.visibilityEnum}" onchange="changeVisibility(${it.id})" id="visibility${it.id}">
+                            </g:select>
+
                             <button type="button" class="btn"  data-target="#sendInviteTo" data-toggle="modal"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
                             <div class="modal fade" id="sendInviteTo" role="dialog">
                                 <div class="modal-dialog">
@@ -346,8 +352,8 @@
                                         <div class="modal-body">
                                             <form>
                                                 <div class="form-group">
-                                                    <label for="recipient-email" class="col-form-label">Email</label>
-                                                    <input type="text" class="form-control" id="recipient-email" required>
+                                                    <label for="recipient-email1" class="col-form-label">Email</label>
+                                                    <input type="text" class="form-control" id="recipient-email1" required>
                                                 </div>
                                                 <div class="form-group">
                                                     %{--<label for="message-text" class="col-form-label">Message:</label>--}%
@@ -369,13 +375,74 @@
                         </div>
                     </div><hr class="new1">
                 </g:each>
+                <g:each in="${com.rxlogix.Subscription.findAllByUser(user).topic}">
+                    <g:if test="${user != it.user}">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <img src="https://codeopinion.com/wp-content/uploads/2017/02/group-of-members-users-icon.png" style="border-radius: 20%; height: 120px; width: 110px;">
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="row">
+                                    <div class="col-sm-9"><b><g:link controller="topic" action="index" params="[topic: it.name]">${it.name}</g:link> </b></div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-4"><p>@${user.userName}</p></div>
+                                    <div class="col-sm-5"> Subscriptions</div>
+                                    <div class="col-sm-3">Post</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4"><a href="#">Unsubscribe</a></div>
+                                    <div class="col-sm-5" style="float: right;"> <a href="#">${com.rxlogix.Subscription.countByTopic(it)}</a></div>
+                                    <div class="col-sm-3"><a href="#">${com.rxlogix.Resources.countByTopic(it)}</a></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <g:select name="seriousness${it.id}" from="${com.rxlogix.Enums.SeriousnessEnum.values()}"
+                                          value="${com.rxlogix.Subscription.findByTopicAndUser(it, com.rxlogix.User.get(session.getAttribute("id"))).seriousnessEnum}"
+                                          onchange="changeSeriousness(${it.id})" id="seriousness${it.id}">
+                                </g:select>
+                                <button type="button" class="btn"  data-target="#sendInviteTo" data-toggle="modal"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
+                                <div class="modal fade" id="sendInviteTo" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Send Invite</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <label for="recipient-email2" class="col-form-label">Email</label>
+                                                        <input type="text" class="form-control" id="recipient-email2" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        %{--<label for="message-text" class="col-form-label">Message:</label>--}%
+                                                        %{--<textarea class="form-control" id="message-text"></textarea>--}%
+                                                        <label for="select-text" >Topic</label>
+                                                        <select id="select-text" name="topic" style="width: 100px;" required>
+                                                            <option value="${it.name}">${it.name}</option>
+                                                        </select>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary">Invite</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </g:if>
+                </g:each>
             </div>
         </div>
         <div class="border1" id="trendingTopic">
             <b>Trending Topics</b>
             <a href="#" style="float: right;">View All</a>
             <hr class="new1">
-            <div style="overflow: auto; height: 320px;">
+            <div style="overflow: auto; overflow-x: hidden; height: 320px;">
                 <g:each in="${trendingTopics}" id="topicList">
                     <div class="row">
                         <div class="col-sm-3">
@@ -392,7 +459,7 @@
                                 <div class="col-sm-3">Post</div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4"><a href="#">Subscribe</a></div>
+                                <div class="col-sm-4"><g:link controller="topic" action="linkUserAndTopic" params="[topic: it.id]"> Subscribe</g:link></div>
                                 <div class="col-sm-5" style="float: right;"> <a href="#">${com.rxlogix.Subscription.countByTopic(it)}</a></div>
                                 <div class="col-sm-3"><a href="#">${com.rxlogix.Resources.countByTopic(it)}</a></div>
                             </div>
@@ -408,7 +475,7 @@
                                 <option value="Private">Private</option>
                             </select>&nbsp&nbsp
                             <button type="button" class="btn"  data-target="#sendInviteTo" data-toggle="modal"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
-                            <div class="modal fade" id="sendInviteTo" role="dialog">
+                            <div class="modal fade" id="sendInviteToUser" role="dialog">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -417,8 +484,8 @@
                                         <div class="modal-body">
                                             <form>
                                                 <div class="form-group">
-                                                    <label for="recipient-email" class="col-form-label">Email</label>
-                                                    <input type="text" class="form-control" id="recipient-email" required>
+                                                    <label for="recipient-email${it.id}" class="col-form-label">Email</label>
+                                                    <input type="text" class="form-control" id="recipient-email${it.id}" required>
                                                 </div>
                                                 <div class="form-group">
                                                     %{--<label for="message-text" class="col-form-label">Message:</label>--}%
@@ -446,7 +513,7 @@
     <div class="col-sm-7" >
         <div class="border1">
             <b>Inbox</b><hr class="new1">
-            <div class="col-sm-12">
+            <div class="col-sm-12" id="readItems">
                 <div class="row">
                     <div class="col-sm-3">
                         <img src="https://www.lamborghini.com/sites/it-en/files/themes/custom/lambo_facelift_2019/images/logo.png" style="border-radius: 20%; height: 120px; width: 110px;">
@@ -468,28 +535,32 @@
 
                     </div>
                 </div> <hr class="new1">
-                <div class="row">
+                <g:each in="${readItem}">
+                    <div class="row">
                     <div class="col-sm-3">
-                        <img src="https://www.starbucks.in/media/logo_tcm87-366_w1024_n.png" style="border-radius: 20%; height: 120px; width: 110px;">
+                        %{--<img src="${it.user.photo}" style="border-radius: 20%; height: 120px; width: 110px;">--}%
+                        <asset:image src="${it.resource.user.photo}" style="border-radius: 20%; height: 120px;"> </asset:image>
                         %{--<g:assetPath src="profile_3.jpeg"> </g:assetPath>--}%
                     </div>
                     <div class="col-sm-8">
                         <div class="row">
-                            <div class="col-sm-9"><b>Mike <a href="#">@mike</a></b></div>
-                            <div class="col-sm-3"> <a href="#">Grails</a></div>
+                            <div class="col-sm-9"><b>${it.resource.user.firstName} <a href="#">@${it.resource.user.userName}</a></b></div>
+                            <div class="col-sm-3"> <a href="#">${it.resource.topic.name}</a></div>
                         </div>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+                        <p>${it.resource.description} </p>
                         <div class="row">
-                            <div class="col-sm-8">
+                            <div class="col-sm-4">
                                 <a href="#"><i class="fa fa-twitter"></i></a>
                                 <a href="#"><i class="fa fa-linkedin"></i></a>
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                             </div>
                             <div class="col-sm-4"><a href="#">View Post</a></div>
+                            <div class="col-sm-4"><a href="#" onclick="readTrue(${it.id})">Mark As Read</a></div>
                         </div>
 
                     </div>
                 </div> <hr class="new1">
+                </g:each>
             </div>
         </div>
     </div>

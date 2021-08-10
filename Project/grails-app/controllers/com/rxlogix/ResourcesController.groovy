@@ -23,7 +23,11 @@ class ResourcesController {
         }catch(Exception e){
             println e
         }
-
+        def userList = Subscription.findAllByTopic(Topic.findByName(params.topic)).user
+        userList.each {
+            ReadingItem readingItem = new ReadingItem(isRead: false, user: it, resource: r)
+            readingItem.save(flush:true, failOnError: true)
+        }
         render "${params} saved with ${l}"
     }
 
