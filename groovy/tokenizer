@@ -1,0 +1,6 @@
+name = "uddesh teke 21"
+List list = name.toList()
+println list
+
+List list1 = name.tokenize(" ")
+println list1

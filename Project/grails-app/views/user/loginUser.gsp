@@ -50,35 +50,34 @@
                     </div>
                         <button type="button" class="btn" data-target="#createTopic" data-toggle="modal"><i class="fa fa-comment" aria-hidden="true"></i></button>&nbsp&nbsp
                         <div class="modal fade" id="createTopic" role="dialog">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Create Topic</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form>
-                                            <div class="form-group">
-                                                <label for="recipient-name" class="col-form-label">Name</label>
-                                                <input type="text" class="form-control" id="recipient-name" required>
-                                            </div>
-                                            <div class="form-group">
-                                                %{--<label for="message-text" class="col-form-label">Message:</label>--}%
-                                                %{--<textarea class="form-control" id="message-text"></textarea>--}%
-                                                <label for="select-text" >Visibility</label>
-                                                <select id="select-text" name="time" style="width: 100px;" required>
-                                                    <option value="private">Private</option>
-                                                    <option value="public">Public</option>
-                                                </select>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary">Save</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <g:form class="form-group" controller="topic" action="createTopic">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Create Topic</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="topicName" class="col-form-label">Name</label>
+                                                    <input type="text" class="form-control" id="topicName" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    %{--<label for="message-text" class="col-form-label">Message:</label>--}%
+                                                    %{--<textarea class="form-control" id="message-text"></textarea>--}%
+                                                    <label for="visibility" >Visibility</label>
+                                                    <select id="visibility" name="time" style="width: 100px;" required>
+                                                        <option value= 1>PRIVATE</option>
+                                                        <option value= 0>PUBLIC</option>
+                                                    </select>
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        </div>
                                     </div>
                                 </div>
-
-                            </div>
+                            </g:form>
                         </div>
                         <button type="button" class="btn"  data-target="#sendInvite" data-toggle="modal"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>&nbsp&nbsp
                         <div class="modal fade" id="sendInvite" role="dialog">
@@ -90,7 +89,7 @@
                                     <div class="modal-body">
                                         <form>
                                             <div class="form-group">
-                                                <label for="recipient-name" class="col-form-label">Email</label>
+                                                <label for="recipient-email" class="col-form-label">Email</label>
                                                 <input type="text" class="form-control" id="recipient-email" required>
                                             </div>
                                             <div class="form-group">
@@ -148,39 +147,39 @@
                         </div>
                         <button type="button" class="btn"  data-target="#shareDocument" data-toggle="modal"><i class="fa fa-file" aria-hidden="true"></i></button>&nbsp&nbsp
                         <div class="modal fade" id="shareDocument" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Share Document</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="document" class="col-form-label">Document</label>
-                                            <input type="file" class="form-control" id="document" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="descriptionDoc" class="col-form-label">Description</label>
-                                            <textarea class="form-control" id="descriptionDoc"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            %{--<label for="message-text" class="col-form-label">Message:</label>--}%
-                                            %{--<textarea class="form-control" id="message-text"></textarea>--}%
-                                            <label for="select-text" >Topic</label>
-                                            <select id="select-text" name="time" style="width: 100px;" required>
-                                                <option value="topicName1">Groovy</option>
-                                                <option value="topicName2">Grails</option>
-                                            </select>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary">Share</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Share Document</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="document" class="col-form-label">Document</label>
+                                                <input type="file" class="form-control" id="document" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="descriptionDoc" class="col-form-label">Description</label>
+                                                <textarea class="form-control" id="descriptionDoc"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                %{--<label for="message-text" class="col-form-label">Message:</label>--}%
+                                                %{--<textarea class="form-control" id="message-text"></textarea>--}%
+                                                <label for="select-text" >Topic</label>
+                                                <select id="select-text" name="time" style="width: 100px;" required>
+                                                    <option value="topicName1">Groovy</option>
+                                                    <option value="topicName2">Grails</option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary">Share</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                         <div class = "dropdown">
                             <button type = "button" class = "btn btn-secondary dropdown-toggle" data-toggle = "dropdown" >user</button>
                             <ul class = "dropdown-menu" >

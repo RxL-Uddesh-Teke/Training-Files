@@ -1,0 +1,9 @@
+List list = ["Test", "Rx", "Session", "today"]
+
+//println list.join(",")
+println list.collect{it +="123"}
+println list.each{
+    it += "23"
+}
+
+println list

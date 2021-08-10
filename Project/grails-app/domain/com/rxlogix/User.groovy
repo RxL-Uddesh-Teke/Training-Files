@@ -4,9 +4,10 @@ class User {
     String email
     String userName
     String password
+//    String cnf_password
     String firstName
     String lastName
-    byte photo
+    String photo
     boolean admin
     Date dateCreated
     Date lastUpdated
@@ -15,7 +16,7 @@ class User {
     // check one to one
 //    static hasOne = [resourceRating: ResourceRating]
 
-    static hasMany = [topics:Topic,subscriptions:Subscription,resources:Resources,readingItems:ReadingItem]
+    static hasMany = [topic:Topic,subscriptions:Subscription,resources:Resources,readingItems:ReadingItem]
 //    resourceRating check
 
     static constraints = {
@@ -24,11 +25,14 @@ class User {
         firstName blank: false
         lastName nullable: true
         password blank: false
+        photo nullable: true, blank: true
 
+//        photo type:'blob'
     }
 
     static mapping = {
         table "USR"
     }
+
 }
 

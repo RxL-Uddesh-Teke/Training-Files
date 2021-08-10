@@ -1,0 +1,16 @@
+//map has unique kay
+// noth can be heterogeneous
+
+Map map = [1:"Udd", 2:"kish","2":"rx", 3:"rx"
+,"pl":null, null:2, "Udd":1]
+//println map.getClass()
+map.put("key","value")
+map.put('a','1')
+map.put('b','2')
+map.put('c','3')
+println map
+println map.containsKey(null)
+println map.containsKey("null1")
+println map.containsValue(null)
+println map.keySet()
+

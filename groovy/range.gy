@@ -1,0 +1,4 @@
+Range range1 = 1..4
+Range range = 'a'..'z'
+println range
+println range.class
