@@ -3,7 +3,8 @@ package com.rxlogix
 class ResourceController {
 
     def index() {
-        render(view: 'index')
+        Resources r = Resources.get(params.id)
+        render(view: 'index', model: [resource: r])
     }
 
     def createLink(){

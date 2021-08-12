@@ -195,11 +195,11 @@
                     <div class = "dropdown">
                         <button type = "button" class = "btn btn-secondary dropdown-toggle" data-toggle = "dropdown" >user</button>
                         <ul class = "dropdown-menu" >
-                            <li><a href = "#" class="dropdown-item">Profile</a></li>
+                            <li><g:link class="dropdown-item"  controller="user" action="userPage">Profile</g:link></li>
                             <li><a href = "#" class="dropdown-item">Users</a></li>
                             <li><a href = "#" class="dropdown-item">Topics</a></li>
                             <li><a href = "#" class="dropdown-item">Posts</a></li>
-                            <li><a href = "#" class="dropdown-item">Logout</a></li>
+                            <li><g:link class="dropdown-item" value="logout" controller="user" action="logout">Logout</g:link></li>
                         </ul>
                     </div>
                 </div>
@@ -221,6 +221,8 @@
             </th>
             <th class="th-sm">Date created
             </th>
+            <th class="th-sm">Activation
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -231,6 +233,14 @@
                     <td>${it.email}</td>
                     <td>${it.password}</td>
                     <td>${it.dateCreated}</td>
+                    <td>
+                        <g:if test="${it.active}">
+                            <g:link controller="user" action="deactivateUser" params="[id:it.id]">Deactivate</g:link>
+                        </g:if>
+                        <g:else>
+                            <g:link controller="user" action="activateUser" params="[id:it.id]">Activate</g:link>
+                        </g:else>
+                    </td>
                 </tr>
             </g:each>
         </tbody>

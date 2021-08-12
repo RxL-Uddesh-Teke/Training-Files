@@ -152,7 +152,7 @@
                 </div>
                     <button type = "button" class = "btn btn-secondary dropdown-toggle" data-toggle = "dropdown" style="height: 38px">user</button>
                     <ul class = "dropdown-menu" >
-                        <li><g:link class="dropdown-item"  controller="user" action="editUserProfile">Profile</g:link></li>
+                        <li><g:link class="dropdown-item"  controller="user" action="userPage">Profile</g:link></li>
                         <li><g:link class="dropdown-item" value="logout" controller="user" action="logout">Logout</g:link></li>
                     </ul>
                 </div>
@@ -308,7 +308,9 @@
                 <g:each in="${resources}">
                     <div class="row">
                         <div class="col-sm-3">
-                            <img src="${it.user.photo}" style="border-radius: 20%; height: 120px; width: 110px;">
+                            %{--<img src="${it.user.photo}" style="border-radius: 20%; height: 120px; width: 110px;">--}%
+                            <asset:image src="${it.user.photo}" style="border-radius: 20%; height: 120px;"> </asset:image>
+
                         </div>
                         <div class="col-sm-8">
                             ${it.description}

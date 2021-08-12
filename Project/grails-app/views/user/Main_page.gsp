@@ -10,6 +10,16 @@
 <head>
     <meta charset="utf-8">
     <title>Link Sharing App</title>
+    <asset:javascript src="jquery-3.3.1.min.js"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    %{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>--}%
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style >
@@ -23,7 +33,7 @@
         padding: 10px;
         margin: 5px;
     }
-    #border1{
+    .border1{
         border-radius: 10px;
         border-width: 1px;
         border-style: solid;
@@ -50,7 +60,7 @@
 <div>
     <div class="row">
         <div  class="col-sm-6">
-            <div id="border1">
+            <div class="border1" style="height: 400px; overflow: auto; overflow-x: hidden">
                 <b >Recent Shares</b><hr>
                 <div class="row">
                     <div class="col-sm-3">
@@ -73,53 +83,17 @@
 
                     </div>
                 </div> <hr>
-
-                <div class="row">
-                    <div class="col-sm-3">
-                        <img src="http://www.savewalterwhite.com/img/walter_1.jpg" style="border-radius: 20%; height: 120px; width: 110px;">
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="row">
-                            <div class="col-sm-9"><b>Walter White <a href="#">@heisenburg</a></b></div>
-                            <div class="col-sm-3"> <a href="#">Grails</a></div>
-                        </div>
-                        <p>You clearly don’t know who you’re talking to, so let me clue you in. I am not in danger, Skyler. I am the danger. </p>
-                        <div class="row">
-                            <div class="col-sm-8">
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                            </div>
-                            <div class="col-sm-4"><a href="#">View Post</a></div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="row" id="border1">
-                    <div class="col-sm-8">
-                        <b>Top posts</b>
-                    </div>
-                    <div class="col-sm-4">
-                        <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
-                        <select id="time" name="time">
-                            <option value="Today">Today</option>
-                            <option value="Week">1 Week</option>
-                            <option value="Month">1 Month</option>
-                            <option value="Year">1 Year</option>
-                        </select>
-                    </div>
+                <g:each in="${resources}">
                     <div class="row">
                         <div class="col-sm-3">
-                            <img src="http://www.savewalterwhite.com/img/walter_1.jpg" style="border-radius: 20%; height: 120px; width: 110px;">
+                            <asset:image src="${it.user.photo}" style="border-radius: 20%; height: 120px;"> </asset:image>
                         </div>
                         <div class="col-sm-8">
                             <div class="row">
-                                <div class="col-sm-9"><b>Walter White <a href="#">@heisenburg</a></b></div>
+                                <div class="col-sm-9"><b>${it.user.firstName} ${it.user.lastName} <a href="#">@${it.user.userName}</a></b></div>
                                 <div class="col-sm-3"> <a href="#">Grails</a></div>
                             </div>
-                            <p>You clearly don’t know who you’re talking to, so let me clue you in. I am not in danger, Skyler. I am the danger. </p>
+                            <p>${it.description} </p>
                             <div class="row">
                                 <div class="col-sm-8">
                                     <a href="#"><i class="fa fa-twitter"></i></a>
@@ -128,14 +102,59 @@
                                 </div>
                                 <div class="col-sm-4"><a href="#">View Post</a></div>
                             </div>
-
+                        </div>
+                    </div><hr>
+                </g:each>
+            </div>
+            <div>
+                <div class="row border1"  style="height: 400px; overflow: auto; overflow-x: hidden">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <b>Top posts</b>
+                            </div>
+                            <div class="col-sm-4">
+                                <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                                <select id="time" name="time">
+                                    <option value="Today">Today</option>
+                                    <option value="Week">1 Week</option>
+                                    <option value="Month">1 Month</option>
+                                    <option value="Year">1 Year</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-sm-12">
+                        <hr>
+                        <g:each in="${ratings}">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <asset:image src="${it.user.photo}" style="border-radius: 20%; height: 120px;"> </asset:image>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <div class="col-sm-9"><b>${it.user.firstName} ${it.user.lastName}  <a href="#">@${it.user.userName}</a></b></div>
+                                        <div class="col-sm-3"> <a href="#">${it.resource.topic.name}</a></div>
+                                    </div>
+                                    <p>${it.resource.description}</p>
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <a href="#"><i class="fa fa-twitter"></i></a>
+                                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                                            <a href="#"><i class="fa fa-facebook"></i></a>
+                                        </div>
+                                        <div class="col-sm-4"><a href="#">View Post</a></div>
+                                    </div>
+                                </div>
+                            </div><hr>
+                        </g:each>
+                    </div>
+
                 </div>
             </div>
         </div>
         <div class="col-sm-6">
-            <div class="col-sm-12" id="border1">
+            <div class="col-sm-12 border1" >
                 <g:form controller="user" action="loginUser">
                     <label><b>Log In</b></label><hr>
                     <div>
@@ -152,13 +171,36 @@
                     </div><br>
 
                     <div>
-                        <button type="button" class="btn" onclick="document.getElementById('id01').style.display='none'">Cancel</button>
-                        <span class="psw">Forgot <a href="#">password?</a></span>
+                        <button type="reset" class="btn" onclick="document.getElementById('id01').style.display='none'">Cancel</button>
+                        <button type="button" class="btn"  data-target="#forgotPassword" data-toggle="modal"><i class="fa fa-lock" aria-hidden="true"></i>  Forgot Password</button>
+                    </div>
+                </g:form>
+            </div>
+            <div class="modal fade" id="forgotPassword" role="dialog">
+                <g:form class="form-group" controller="user" action="forgotPassword">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Forgot Password?</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="email" class="col-form-label">Email</label>
+                                        <input class="form-control" id="email" name="email" ></input>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Send Reset Password Link</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
                     </div>
                 </g:form>
             </div>
 
-            <div class="col-sm-12" id="border1">
+            <div class="col-sm-12 border1" >
                 <g:form class="form-group" enctype="multipart/form-data" controller="user" action="registerUser">
                     <div>
                         <label bold><b>Sign Up</b></label>&nbsp

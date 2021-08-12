@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    // $('#star3').prop("checked", true);
     $("#btn").click(function () {
         // var topicCreate = "${createLink(controller:'topic', action: 'createTopic')}";
         console.log("button clicked");
@@ -15,6 +16,7 @@ $(document).ready(function(){
                     // $("#sendInvite").modal('hide');
                     $('#shareDocument').load(' #shareDocument');
                     $('#shareResource').load(' #shareResource');
+                    $('#topicList').load(' #topicList');
                 },
                 error: function (response) {
                     console.log("error");
@@ -90,5 +92,41 @@ function readTrue(readItem){
             $("#readItems").load(" #readItems");
         }
     })
+}
+
+function deleteTopic(topic){
+    alert("Do you really want to delete this topic?");
+    $.ajax({
+        url:"/topic/deleteTopic",
+        data:{
+            id:topic
+        },
+        success:function (response) {
+            console.log("Inside success");
+            $("#topicList").load(" #topicList");
+        }
+    })
+}
+
+function rate(score, resourceId) {
+    console.log(score);
+    var id = "#star" + score;
+    $.ajax({
+        url:"/resources/addRating",
+        data:{
+            score: score,
+            resourceId: resourceId
+        },
+        success:function (response) {
+            console.log("Inside rating success");
+            $(id).addClass("checked");
+        }
+    })
+}
+
+function rating(id){
+    var Id = "#star" + id;
+    $(Id).prop("checked", true);
+    console.log("called rating with score:"+ id);
 }
 

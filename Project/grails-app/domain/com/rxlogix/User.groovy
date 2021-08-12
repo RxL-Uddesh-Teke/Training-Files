@@ -11,6 +11,7 @@ class User {
     boolean admin
     Date dateCreated
     Date lastUpdated
+    boolean active
     // confirm password check
 
     // check one to one

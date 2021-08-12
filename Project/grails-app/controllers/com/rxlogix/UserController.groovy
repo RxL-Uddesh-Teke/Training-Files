@@ -8,7 +8,9 @@ class UserController {
     def userService
 
     def index(){
-        render (view: 'Main_page')
+        List<Resources> resources = Resources.listOrderByDateCreated(max: 5)
+        List<ResourceRating> ratingList = ResourceRating.listOrderByScore(max: 5,order:"asc")
+        render (view: 'Main_page', model: [resources: resources, ratings: ratingList])
     }
 
     def logout(){
@@ -79,6 +81,10 @@ class UserController {
         List<Resources> r = Resources.listOrderByDescription(max: 5)
     }
 
+//    def recentShare(){
+//        List<Resources> resources = Resources.listOrderByDateCreated(max: 5)
+//    }
+
 //    def search(){
 //        Topic t = Topic.createCriteria().list {
 //
@@ -88,7 +94,12 @@ class UserController {
 
     def admin(){
         def users = userService.userList()
-        render(view: 'admin', model: [user: users])
+        if(User.get(session.getAttribute("id")).admin){
+            render(view: 'admin', model: [user: users])
+        }else{
+            render "You are not admin"
+        }
+
     }
 
     def registerUser(){
@@ -130,5 +141,69 @@ class UserController {
         ReadingItem r = ReadingItem.get(params.id)
         r.setProperty("isRead", true)
         r.save(flush:true)
+    }
+
+    def activateUser(){
+        User u = User.get(params.id)
+        u.setActive(true)
+        u.save(flush:true)
+        render "${u.userName} successfully activated"
+    }
+    def deactivateUser(){
+        User u = User.get(params.id)
+        if (!u.admin){
+            u.setActive(false)
+            u.save(flush:true)
+            render "${u.userName} successfully deactivated"
+        }else{
+            render "You are admin, you cannot deactivate yourself"
+        }
+    }
+
+    def forgotPassword(){
+        println("forgot password called")
+        String t = Math.random()
+        User u = User.findByEmail(params.email)
+        if(u==null){
+            render "Account with following email doesnt exist"
+        }else{
+            Token token = new Token(user: u, tokenString: t)
+            token.save(flush:true, failOnError: true)
+            println "token saved By ${token}"
+            String link = "http://localhost:8181"+ createLink(action: "renderForgotPassword", params: [user: u.id, tokenString: t])
+            sendMail {
+                to "${params.email}"
+                subject "${u.userName}:Link for reset password"
+                text link
+            }
+            render "Email should be sent"
+        }
+    }
+
+    def renderForgotPassword(){
+        println "${params.tokenString} from email--------------"
+        Token tokenDelete = Token.findByTokenString(params.tokenString)
+        if(tokenDelete!=null){
+            String tok = Token.findByTokenString(params.tokenString).tokenString
+
+            println "${tok} from server-----------------------"
+            println "${params.tokenString==tok}"
+            tokenDelete.delete(flush: true)
+            println  "${tokenDelete}--------------tokenDelete"
+            render (view: "forgotPassword", model: [user:params.user])
+        }else{
+            render " Invalid Token"
+        }
+
+    }
+
+    def changePassword(){
+        println "change password called from gsp page"
+        if(params.password==params.cnfpassword){
+            User u = User.get(params.user)
+            u.password = params.password
+            u.save(flush:true)
+            render"Password changed successfully"
+        }
     }
 }
