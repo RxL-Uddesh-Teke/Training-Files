@@ -49,7 +49,7 @@ class TopicController {
         t.save(flush:true)
     }
 
-    def linkUserAndTopic() {
+    def linkUserAndTopic(){
         User u = User.get(session.getAttribute("id"))
         Topic t = Topic.get(params.topic)
         Subscription check = Subscription.findByTopicAndUser(t, u)
@@ -89,6 +89,54 @@ class TopicController {
         }else{
             render "Already subscribed to this topic"
         }
+    }
+
+    def deleteTopic(){
+        println "Delete topic called"
+        Topic t = Topic.get(params.id)
+        def r = Resources.findAllByTopic(t)
+        def ri = Subscription.findAllByTopic(t)
+        r.each {
+            def rItem = ReadingItem.findAllByResource(it)
+            rItem.each {t1 ->
+                if(t1 != null){
+                    t1.delete(flush: true)
+                }
+            }
+
+            def rRating = ResourceRating.findAllByResource(it)
+            rRating.each {r1->
+                if(r1!=null){
+                    r1.delete(flush:true)
+                }
+            }
+
+            if(LinkResource.findByResource(it)!=null){
+                def l = LinkResource.findByResource(it)
+                l.delete(flush:true)
+                it.delete(flush:true)
+            }else if (DocumentResource.findByResource(it)!=null){
+                def d = DocumentResource.findByResource(it)
+                d.delete(flush:true)
+                it.delete(flush:true)
+            }
+        }
+//        Subscription.deleteAll(ri)
+        ri.each {
+            it.delete(flush:true)
+        }
+        t.delete(flush:true)
+        redirect(controller: "user", action: "userPage")
+    }
+
+    def unSubscribe(){
+        Subscription s= Subscription.findByUserAndTopic(User.get(session.getAttribute('id')), Topic.get(params.topic))
+        s.delete(flush: true)
+        render "You are unsubscribed from ${Topic.get(params.topic).name}"
+    }
+
+    def unSubscribedForCreator(){
+        render "You cannot unsubscribe from ${Topic.get(params.topic).name}, you can delete it"
     }
 
 }

@@ -56,6 +56,7 @@ class UserService {
                 File photo = new File("/home/rxlogix/Desktop/TrainingFolders63/Project/grails-app/assets/images/profile/${newUser.userName}.jpg")
                 file.transferTo(photo)
                 newUser.photo = "/profile/${newUser.userName}.jpg"
+                newUser.active= true
                 //"/profile/${params.userName}.jpg"
 //                newUser = User(params, photo:"${photo.getAbsolutePath()}")
 //                println newUser.photo
@@ -64,6 +65,10 @@ class UserService {
             try {
 //              redirect back with success msg
                 newUser.save(flush:true,failOnError:true)
+                if(newUser.id==1){
+                    newUser.setAdmin(true)
+                    newUser.save(flush:true)
+                }
                 return "Registered Successfully, Please Login to continue..."
             }catch(Exception e) {
 //              redirect back with error msg
@@ -75,7 +80,7 @@ class UserService {
 
     def login(def request, Map params){
         def x = User.findByUserName(params.username)
-        if(x!= null){
+        if(x!= null&&x.active){
             if(x.password==params.password){
                 return "Congratulations you are logged in"
 //                redirect(action: "userPage", params:params)
@@ -83,8 +88,12 @@ class UserService {
             else{
                 return "Oops wrong password"
             }
-        }else
+        }else if(x==null){
             return "Username doesn't exist"
+        }else if(!x.active){
+            return "You are deactivated by admin"
+        }
+
     }
 
     def logout(){

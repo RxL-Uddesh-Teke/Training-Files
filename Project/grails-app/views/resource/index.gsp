@@ -13,6 +13,7 @@
     %{--<link rel="stylesheet" href="/assets/stylesheets/bootstrap.css">--}%
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <asset:javascript src="createTopic.js"/>
     <style >
     *{
         margin: 0;
@@ -177,24 +178,24 @@
                 <div id="border1">
                     <div class="row">
                         <div class="col-sm-3"><img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" style="border-radius: 20%; height: 120px; width: 110px;"></div>
-                        <div class="col-sm-3"><b>Anna Gunn <a href="#">@anna</a></b></div>
-                        <div class="col-sm-2" style="float: right=;"> <a href="#">Grails</a></div>
-                        <div class="col-sm-4"><div class="rate">
-                            <input type="radio" id="star5" name="rate" value="5" />
-                            <label for="star5" title="text">5 stars</label>
-                            <input type="radio" id="star4" name="rate" value="4" />
-                            <label for="star4" title="text">4 stars</label>
-                            <input type="radio" id="star3" name="rate" value="3" />
-                            <label for="star3" title="text">3 stars</label>
-                            <input type="radio" id="star2" name="rate" value="2" />
-                            <label for="star2" title="text">2 stars</label>
-                            <input type="radio" id="star1" name="rate" value="1" />
-                            <label for="star1" title="text">1 star</label>
-                        </div></div>
+                        <div class="col-sm-3"><b>${resource.user.firstName} <a href="#">@${resource.user.userName}</a></b></div>
+                        <div class="col-sm-2" style="float: right=;"> <a href="#">${resource.topic.name}</a></div>
+                        <div class="col-sm-4">
+                            <div class="rate">
+                                <input type="radio" id="star5" name="rate" value="5" onclick="rate(5)" />
+                                <label for="star5" title="text">5 stars</label>
+                                <input type="radio" id="star4" name="rate" value="4" onclick="rate(4)"/>
+                                <label for="star4" title="text">4 stars</label>
+                                <input type="radio" id="star3" name="rate" value="3" onclick="rate(3)"/>
+                                <label for="star3" title="text">3 stars</label>
+                                <input type="radio" id="star2" name="rate" value="2" onclick="rate(2)"/>
+                                <label for="star2" title="text">2 stars</label>
+                                <input type="radio" id="star1" name="rate" value="1" onclick="rate(1)"/>
+                                <label for="star1" title="text">1 star</label>
+                            </div>
+                        </div>
                     </div>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                    the industry's standard dummy text.</p>
+                    <p>${resource.description}</p>
                     <div class="row">
                         <div class="col-sm-4">
                             <a href="#"><i class="fa fa-twitter"></i></a>

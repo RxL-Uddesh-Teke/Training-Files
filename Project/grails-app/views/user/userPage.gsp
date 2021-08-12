@@ -93,8 +93,6 @@
                                             <input type="text" class="form-control" id="topicName" name="topicName" required>
                                         </div>
                                         <div class="form-group">
-                                            %{--<label for="message-text" class="col-form-label">Message:</label>--}%
-                                            %{--<textarea class="form-control" id="message-text"></textarea>--}%
                                             <label for="visibility" >Visibility</label>
                                             <select id="visibility" name="visibility" style="width: 100px;" required>
                                                 <option value="1">PRIVATE</option>
@@ -103,16 +101,12 @@
                                         </div>
                                         </div>
                                     <div class="modal-footer">
-                                        %{--<g:actionSubmit controller="topic" action="createTopic" value="createTopic">Save</g:actionSubmit>--}%
                                         <button type="submit" class="btn btn-primary" id="btn">Save</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                     </div>
                                 </div>
                             </div>
-                            %{--<button type="submit" class="btn btn-primary" id="btn">Save</button>--}%
-                            %{--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>--}%
                         </form>
-
                     </div>
                     <button type="button" class="btn"  data-target="#sendInvite" data-toggle="modal"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>&nbsp&nbsp
                     <div class="modal fade" id="sendInvite" role="dialog">
@@ -228,7 +222,7 @@
                         <button type = "button" class = "btn btn-secondary dropdown-toggle" data-toggle = "dropdown" >user</button>
                         <ul class = "dropdown-menu" >
                             <li><g:link class="dropdown-item"  controller="user" action="editUserProfile">Profile</g:link></li>
-                            <li><a href = "#" class="dropdown-item">Users</a></li>
+                            <li><g:link class="dropdown-item"  controller="user" action="admin">Users</g:link></li>
                             <li><a href = "#" class="dropdown-item">Topics</a></li>
                             <li><a href = "#" class="dropdown-item">Posts</a></li>
                             <li><g:link class="dropdown-item" value="logout" controller="user" action="logout">Logout</g:link></li>
@@ -263,7 +257,7 @@
                 </div>
             </div>
         </div>
-        <div class="border1">
+        <div class="border1" id="topicList">
             <b>Subscriptions</b>
             <a href="#" style="float: right;">View All</a>
             <hr class="new1">
@@ -312,7 +306,7 @@
 
                     </div>
                 </div> <hr class="new1">
-                <g:each in="${com.rxlogix.Topic.findAllByUser(user)}" id="topicList">
+                <g:each in="${com.rxlogix.Topic.findAllByUser(user)}">
                     <div class="row">
                         <div class="col-sm-3">
                             <img src="https://codeopinion.com/wp-content/uploads/2017/02/group-of-members-users-icon.png" style="border-radius: 20%; height: 120px; width: 110px;">
@@ -328,7 +322,7 @@
                                 <div class="col-sm-3">Post</div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4"><a href="#">Unsubscribe</a></div>
+                                <div class="col-sm-4"><g:link controller="topic" action="unSubscribedForCreator" params="[topic: it.id]">Unsubscribe</g:link></div>
                                 <div class="col-sm-5" style="float: right;"> <a href="#">${com.rxlogix.Subscription.countByTopic(it)}</a></div>
                                 <div class="col-sm-3"><a href="#">${com.rxlogix.Resources.countByTopic(it)}</a></div>
                             </div>
@@ -342,36 +336,39 @@
                             value="${it.visibilityEnum}" onchange="changeVisibility(${it.id})" id="visibility${it.id}">
                             </g:select>
 
-                            <button type="button" class="btn"  data-target="#sendInviteTo" data-toggle="modal"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
-                            <div class="modal fade" id="sendInviteTo" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Send Invite</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form>
-                                                <div class="form-group">
-                                                    <label for="recipient-email1" class="col-form-label">Email</label>
-                                                    <input type="text" class="form-control" id="recipient-email1" required>
-                                                </div>
-                                                <div class="form-group">
-                                                    %{--<label for="message-text" class="col-form-label">Message:</label>--}%
-                                                    %{--<textarea class="form-control" id="message-text"></textarea>--}%
-                                                    <label for="select-text" >Topic</label>
-                                                    <select id="select-text" name="topic" style="width: 100px;" required>
-                                                        <option value="${it.name}">${it.name}</option>
-                                                    </select>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary">Invite</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn"  data-target="#sendInviteTo-${it.id}" data-toggle="modal"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
+                            <div class="modal fade" id="sendInviteTo-${it.id}" role="dialog">
+                                <g:form class="form-group" controller="topic" action="sendInvite">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Send Invite</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="form-group">
+                                                        <label for="recipient-email" class="col-form-label">Email</label>
+                                                        <input type="text" name="recipientEmail" class="form-control" id="recipient-email-1" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        %{--<label for="message-text" class="col-form-label">Message:</label>--}%
+                                                        %{--<textarea class="form-control" id="message-text"></textarea>--}%
+                                                        <label for="select-text" >Topic</label>
+                                                        <select id="select-text" name="topicId" style="width: 100px;" required>
+                                                            <option value="${it.id}">${it.name}</option>
+                                                        </select>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Invite</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </g:form>
                             </div>
+                            <button type="button" class="btn" onclick="deleteTopic(${it.id})"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                         </div>
                     </div><hr class="new1">
                 </g:each>
@@ -392,7 +389,7 @@
                                     <div class="col-sm-3">Post</div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-4"><a href="#">Unsubscribe</a></div>
+                                    <div class="col-sm-4"><g:link controller="topic" action="unSubscribe" params="[topic: it.id]">Unsubscribe</g:link></div>
                                     <div class="col-sm-5" style="float: right;"> <a href="#">${com.rxlogix.Subscription.countByTopic(it)}</a></div>
                                     <div class="col-sm-3"><a href="#">${com.rxlogix.Resources.countByTopic(it)}</a></div>
                                 </div>
@@ -402,38 +399,40 @@
                                           value="${com.rxlogix.Subscription.findByTopicAndUser(it, com.rxlogix.User.get(session.getAttribute("id"))).seriousnessEnum}"
                                           onchange="changeSeriousness(${it.id})" id="seriousness${it.id}">
                                 </g:select>
-                                <button type="button" class="btn"  data-target="#sendInviteTo" data-toggle="modal"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
-                                <div class="modal fade" id="sendInviteTo" role="dialog">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Send Invite</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form>
-                                                    <div class="form-group">
-                                                        <label for="recipient-email2" class="col-form-label">Email</label>
-                                                        <input type="text" class="form-control" id="recipient-email2" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        %{--<label for="message-text" class="col-form-label">Message:</label>--}%
-                                                        %{--<textarea class="form-control" id="message-text"></textarea>--}%
-                                                        <label for="select-text" >Topic</label>
-                                                        <select id="select-text" name="topic" style="width: 100px;" required>
-                                                            <option value="${it.name}">${it.name}</option>
-                                                        </select>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary">Invite</button>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn"  data-target="#sendInviteTo${it.id}" data-toggle="modal"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
+                                <div class="modal fade" id="sendInviteTo${it.id}" role="dialog">
+                                    <g:form class="form-group" controller="topic" action="sendInvite">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Send Invite</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label for="recipient-email" class="col-form-label">Email</label>
+                                                            <input type="text" name="recipientEmail" class="form-control" id="recipient-email-" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            %{--<label for="message-text" class="col-form-label">Message:</label>--}%
+                                                            %{--<textarea class="form-control" id="message-text"></textarea>--}%
+                                                            <label for="select-text" >Topic</label>
+                                                            <select id="select-text" name="topicId" style="width: 100px;" required>
+                                                                <option value="${it.id}">${it.name}</option>
+                                                            </select>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Invite</button>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </g:form>
                                 </div>
                             </div>
-                        </div>
+                        </div><hr>
                     </g:if>
                 </g:each>
             </div>
@@ -554,7 +553,7 @@
                                 <a href="#"><i class="fa fa-linkedin"></i></a>
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                             </div>
-                            <div class="col-sm-4"><a href="#">View Post</a></div>
+                            <div class="col-sm-4"><g:link controller="resources" action="index" params="[id: it.resource.id]">View Post</g:link></div>
                             <div class="col-sm-4"><a href="#" onclick="readTrue(${it.id})">Mark As Read</a></div>
                         </div>
 

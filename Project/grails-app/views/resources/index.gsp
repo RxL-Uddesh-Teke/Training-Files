@@ -1,3 +1,4 @@
+<%@ page import="com.rxlogix.User" %>
 <%--
   Created by IntelliJ IDEA.
   User: rxlogix
@@ -10,9 +11,19 @@
 <head>
     <meta charset="utf-8">
     <title>Link Sharing App</title>
-    %{--<link rel="stylesheet" href="/assets/stylesheets/bootstrap.css">--}%
+    <asset:javascript src="jquery-3.3.1.min.js"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    %{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>--}%
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    %{--<script src="https://code.jquery.com/jquery-3.1.1.min.js"/>--}%
+
+    <asset:javascript src="createTopic.js"/>
     <style >
     *{
         margin: 0;
@@ -74,7 +85,7 @@
     }
     </style>
 </head>
-<body>
+<body onload="rating(${com.rxlogix.ResourceRating.findByResourceAndUser(resource, com.rxlogix.User.get(session.getAttribute("id")))==null?0:com.rxlogix.ResourceRating.findByResourceAndUser(resource, com.rxlogix.User.get(session.getAttribute("id"))).score})">
     <div class="container">
         <h2 style="text-align: center;"> Home </h2>
         <div style="border-color: black;">
@@ -160,8 +171,8 @@
                         <div class = "dropdown" style="width: 100px;">
                             <button type = "button" class = "btn btn-secondary dropdown-toggle" data-toggle = "dropdown">user</button>
                             <ul class = "dropdown-menu" >
-                                <li><a href = "#" class="dropdown-item">Profile</a></li>
-                                <li><a href = "#" class="dropdown-item">Logout</a></li>
+                                <li><g:link class="dropdown-item"  controller="user" action="userPage">Profile</g:link></li>
+                                <li><g:link class="dropdown-item" value="logout" controller="user" action="logout">Logout</g:link></li>
                             </ul>
                         </div>
                     </div>
@@ -176,38 +187,49 @@
             <div class="col-sm-7" >
                 <div id="border1">
                     <div class="row">
-                        <div class="col-sm-3"><img src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" style="border-radius: 20%; height: 120px; width: 110px;"></div>
-                        <div class="col-sm-3"><b>Anna Gunn <a href="#">@anna</a></b></div>
-                        <div class="col-sm-2" style="float: right=;"> <a href="#">Grails</a></div>
-                        <div class="col-sm-4"><div class="rate">
-                            <input type="radio" id="star5" name="rate" value="5" />
-                            <label for="star5" title="text">5 stars</label>
-                            <input type="radio" id="star4" name="rate" value="4" />
-                            <label for="star4" title="text">4 stars</label>
-                            <input type="radio" id="star3" name="rate" value="3" />
-                            <label for="star3" title="text">3 stars</label>
-                            <input type="radio" id="star2" name="rate" value="2" />
-                            <label for="star2" title="text">2 stars</label>
-                            <input type="radio" id="star1" name="rate" value="1" />
-                            <label for="star1" title="text">1 star</label>
-                        </div></div>
-                    </div>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                    the industry's standard dummy text.</p>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-facebook"></i></a>
+                        <div class="col-sm-3">
+                            <asset:image src="${resource.user.photo}" style="border-radius: 20%; height: 120px;"> </asset:image>
                         </div>
-                        <div class="col-sm-8">
-                            <a href="#">Delete</a>&nbsp&nbsp
-                            <a href="#">Edit</a>&nbsp&nbsp
-                            <a href="#">Download</a>&nbsp&nbsp
-                            <a href="#">View Full site</a>
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-4"><b>${resource.user.firstName} <a href="#">@${resource.user.userName}</a></b></div>
+                                <div class="col-sm-2" style="float: right;"> <a href="#">${resource.topic.name}</a></div>
+                                <div class="col-sm-6" >
+                                    <div class="rate">
+                                        <input type="radio" id="star5" name="rate" value="5" onclick="rate(5, ${resource.id})" />
+                                        <label for="star5" title="text">5 stars</label>
+                                        <input type="radio" id="star4" name="rate" value="4" onclick="rate(4, ${resource.id})"/>
+                                        <label for="star4" title="text">4 stars</label>
+                                        <input type="radio" id="star3" name="rate" value="3" onclick="rate(3, ${resource.id})"/>
+                                        <label for="star3" title="text">3 stars</label>
+                                        <input type="radio" id="star2" name="rate" value="2" onclick="rate(2, ${resource.id})"/>
+                                        <label for="star2" title="text">2 stars</label>
+                                        <input type="radio" id="star1" name="rate" value="1" onclick="rate(1, ${resource.id})"/>
+                                        <label for="star1" title="text">1 star</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <p>${resource.description}</p>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <a href="#"><i class="fa fa-twitter"></i></a>
+                                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                                            <a href="#"><i class="fa fa-facebook"></i></a>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <a href="#">Delete</a>&nbsp&nbsp
+                                            <a href="#">Edit</a>&nbsp&nbsp
+                                            <a href="#">Download</a>&nbsp&nbsp
+                                            <a href="#">ViewSite</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
                 </div>
             </div>
 
@@ -260,10 +282,10 @@
 
     </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+%{--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>--}%
+%{--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>--}%
 %{--<-- Always remember to call the above files first before calling the bootstrap.min.js file -->--}%
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+%{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>--}%
 
 
 </body>

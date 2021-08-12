@@ -6,7 +6,8 @@ class ResourcesController {
     def resourcesService
 
     def index() {
-        render(view: 'index')
+        Resources r = Resources.get(params.id)
+        render(view: 'index',model: [resource: r])
     }
 
     def createLink(){
@@ -74,7 +75,27 @@ class ResourcesController {
             }
             session.setAttribute("user",u1)
             render "${d} saved in topic ${topic}"
+    }
 
-
+    def addRating() {
+        int score = params.score
+        score -= 48
+        println(score+" params.score")
+        Resources r = Resources.get(params.resourceId)
+        User u = User.get(session.getAttribute("id"))
+        ResourceRating rr_ = ResourceRating.findByResourceAndUser(r, u)
+        if (rr_ == null) {
+            ResourceRating rr = new ResourceRating(score: params.score, resource: r, user: u)
+//            println("ok ")
+            rr.save(flush: true, failOnError: true)
+            render " Successfully rated"
+        }else{
+            rr_.setScore(score)
+            println("Setting score as ${params.score}")
+            rr_.save(flush:true)
+            println("------------- ${rr_.score}")
+//            println "ok 2"
+            render "Successfully Modified your rating"
+        }
     }
 }
